@@ -21,11 +21,11 @@ public class ResponseParser {
             JsonNode root = objectMapper.readTree(json);
 
             return ParsedIncident.builder()
-                    .hypothesis(root.get("hypothesis").asText())
-                    .confidence(root.get("confidence").asDouble())
-                    .affectedComponents(toStringList(root.get("affected_components")))
-                    .suggestedActions(toStringList(root.get("suggested_actions")))
-                    .similarIncidentIds(toStringList(root.get("similar_incident_ids")))
+                    .hypothesis(root.path("hypothesis").asText())
+                    .confidence(root.path("confidence").asDouble())
+                    .affectedComponents(toStringList(root.path("affected_components")))
+                    .suggestedActions(toStringList(root.path("suggested_actions")))
+                    .similarIncidentIds(toStringList(root.path("similar_incident_ids")))
                     .parseSuccess(true)
                     .build();
 

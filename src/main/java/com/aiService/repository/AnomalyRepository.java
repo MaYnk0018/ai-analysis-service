@@ -22,7 +22,7 @@ public class AnomalyRepository {
     public int updateStatus(String anomalyId, String status) {
         return jdbcTemplate.update(
                 "UPDATE anomalies SET status = ? WHERE id = ?",
-                status,
+    status,
                 anomalyId
         );
     }

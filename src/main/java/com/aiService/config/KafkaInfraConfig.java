@@ -21,8 +21,8 @@ import com.aiService.dto.AnomalyMessage;
 @EnableKafka
 public class KafkaInfraConfig {
     
+        //usng manual ack mode to ensure that we only acknowledge messages after successful processing
     @Bean
-    
     public ConsumerFactory<String, AnomalyMessage> anomalyConsumerFactory(@Value("${spring.kafka.bootstrap-servers}") String bootstrap){
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrap);

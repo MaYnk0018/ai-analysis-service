@@ -46,6 +46,8 @@ public class AnomalyConsumer {
 
         anomalyRepository.updateStatus(anomaly.getAnomalyId(), "ANALYZING");
 
+        //how can i handle multiple consumption of same anomaly
+
         String raw = llmClient.analyze(prompt);
         ParsedIncident parsed = responseParser.parse(raw);
 
