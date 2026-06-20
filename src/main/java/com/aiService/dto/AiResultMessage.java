@@ -20,5 +20,7 @@ public class AiResultMessage {
     private List<String> affectedComponents;
     private List<String> suggestedActions;
     private String severity;
+    private double zScore;
+    private int errorCount;
 }
 

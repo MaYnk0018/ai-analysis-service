@@ -17,7 +17,8 @@ public class ResponseParser {
 
     public ParsedIncident parse(String response) {
         try {
-            JsonNode root = objectMapper.readTree(response);
+            String json = unwrapPossibleMarkdownFence(response.trim());
+            JsonNode root = objectMapper.readTree(json);
 
             return ParsedIncident.builder()
                     .hypothesis(root.get("hypothesis").asText())
@@ -38,6 +39,19 @@ public class ResponseParser {
                     .parseSuccess(false)
                     .build();
         }
+    }
+
+    /** Local LLMs often wrap JSON in ```json ... ``` even when asked not to. */
+    private static String unwrapPossibleMarkdownFence(String raw) {
+        if (!raw.startsWith("```")) {
+            return raw;
+        }
+        int firstNl = raw.indexOf('\n');
+        int lastFence = raw.lastIndexOf("```");
+        if (firstNl < 0 || lastFence <= firstNl) {
+            return raw;
+        }
+        return raw.substring(firstNl + 1, lastFence).trim();
     }
 
     private List<String> toStringList(JsonNode arrayNode) {

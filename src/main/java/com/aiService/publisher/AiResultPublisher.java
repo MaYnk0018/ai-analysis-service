@@ -28,6 +28,8 @@ public class AiResultPublisher {
                 .affectedComponents(parsed.getAffectedComponents())
                 .suggestedActions(parsed.getSuggestedActions())
                 .severity(anomaly.getSeverity())
+                .zScore(anomaly.getZScore())
+                .errorCount(anomaly.getErrorCount())
                 .build();
 
         kafkaTemplate.send("ai-results", anomaly.getAnomalyId(), msg)

@@ -9,8 +9,8 @@ import com.aiService.entities.IncidentEntity;
 import com.aiService.publisher.AiResultPublisher;
 import com.aiService.repository.AnomalyRepository;
 import com.aiService.repository.IncidentRepository;
-import com.aiService.claude.ClaudeClient;
 import com.aiService.claude.ResponseParser;
+import com.aiService.llm.LlmClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 public class AnomalyConsumer {
 
-    private final ClaudeClient claudeClient;
+    private final LlmClient llmClient;
     private final ResponseParser responseParser;
     private final IncidentRepository incidentRepository;
     private final AnomalyRepository anomalyRepository;
@@ -46,7 +46,7 @@ public class AnomalyConsumer {
 
         anomalyRepository.updateStatus(anomaly.getAnomalyId(), "ANALYZING");
 
-        String raw = claudeClient.analyze(prompt);
+        String raw = llmClient.analyze(prompt);
         ParsedIncident parsed = responseParser.parse(raw);
 
         IncidentEntity entity = new IncidentEntity();
@@ -59,7 +59,7 @@ public class AnomalyConsumer {
         entity.setRawPrompt(prompt);
         entity.setRawResponse(raw);
         entity.setTokensUsed(0);
-        entity.setModelVersion("fake-claude");
+        entity.setModelVersion(llmClient.modelLabel());
 
         IncidentEntity saved = incidentRepository.save(entity);
 

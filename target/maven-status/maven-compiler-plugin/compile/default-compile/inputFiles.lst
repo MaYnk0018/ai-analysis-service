@@ -1,9 +1,16 @@
 C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\repository\AnomalyRepository.java
 C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\dto\ParsedIncident.java
+C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\llm\GeminiLlmClient.java
 C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\dto\AnomalyMessage.java
-C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\claude\ClaudeClient.java
+C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\llm\OpenAiLlmClient.java
 C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\repository\IncidentRepository.java
 C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\config\JacksonConfig.java
+C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\dto\IncidentSummaryResponse.java
+C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\controller\IncidentController.java
+C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\llm\LlmClient.java
+C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\llm\OllamaLlmClient.java
+C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\llm\StubLlmClient.java
+C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\llm\GroqLlmClient.java
 C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\AiAnalysisApplication.java
 C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\claude\ResponseParser.java
 C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\consumer\AnomalyConsumer.java
@@ -11,4 +18,5 @@ C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiSe
 C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\publisher\AiResultPublisher.java
 C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\config\KafkaInfraConfig.java
 C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\entities\IncidentEntity.java
+C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\llm\OpenAiCompatibleHttp.java
 C:\Users\hp5cd\OneDrive\Desktop\AiLog\ai-analysis-service\src\main\java\com\aiService\dto\AiResultMessage.java

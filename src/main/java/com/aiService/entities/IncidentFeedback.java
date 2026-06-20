@@ -28,7 +28,7 @@ public class IncidentFeedback {
     private String userId;
 
     @Column(name = "rating")
-    private int rating;
+    private byte rating;
 
     @Column(name = "notes")
     private String notes;
