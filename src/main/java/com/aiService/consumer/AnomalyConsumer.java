@@ -14,6 +14,7 @@ import com.aiService.llm.LlmClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class AnomalyConsumer {
 
     @KafkaListener(topics = "anomalies", groupId = "ai-group", containerFactory = "anomalyKafkaListenerContainerFactory")
     public void consume(ConsumerRecord<String, AnomalyMessage> record, Acknowledgment ack) {
-        //consume , acknowledge the message, retrys
+        // consume , acknowledge the message, retrys
         try {
             AnomalyMessage anomalyMessage = record.value();
             runAnalysis(anomalyMessage);
@@ -37,7 +38,7 @@ public class AnomalyConsumer {
             ack.acknowledge();
         } catch (Exception e) {
             log.error("Error consuming anomaly message", e);
-            //do not acknowledge the message
+            // do not acknowledge the message
         }
     }
 
@@ -46,11 +47,32 @@ public class AnomalyConsumer {
 
         anomalyRepository.updateStatus(anomaly.getAnomalyId(), "ANALYZING");
 
-        //how can i handle multiple consumption of same anomaly
+        // how can i handle multiple consumption of same anomaly
 
         String raw = llmClient.analyze(prompt);
         ParsedIncident parsed = responseParser.parse(raw);
 
+        if (!parsed.isParseSuccess()) {
+            // save failed analysis for debugging
+            // update anomaly status to AI_PARSE_FAILED or ANALYSIS_FAILED
+            // do not publish normal ai-results
+            IncidentEntity entity = new IncidentEntity();
+            entity.setAnomalyId(anomaly.getAnomalyId());
+            entity.setHypothesis(parsed.getHypothesis());
+            entity.setConfidence(parsed.getConfidence());
+            entity.setAffectedComponents(parsed.getAffectedComponents());
+            entity.setSuggestedActions(parsed.getSuggestedActions());
+            entity.setSimilarIncidentIds(parsed.getSimilarIncidentIds());
+            entity.setRawPrompt(prompt);
+            entity.setRawResponse(raw);
+            entity.setTokensUsed(0);
+            entity.setModelVersion(llmClient.modelLabel());
+
+            incidentRepository.save(entity);
+
+            anomalyRepository.updateStatus(anomaly.getAnomalyId(), "AI_PARSE_FAILED");
+            return;
+        }
         IncidentEntity entity = new IncidentEntity();
         entity.setAnomalyId(anomaly.getAnomalyId());
         entity.setHypothesis(parsed.getHypothesis());
@@ -93,7 +115,6 @@ public class AnomalyConsumer {
                 a.getBaselineMean(),
                 a.getErrorCount(),
                 a.getWindowStart(),
-                a.getWindowEnd()
-        );
+                a.getWindowEnd());
     }
 }
